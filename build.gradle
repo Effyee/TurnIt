@@ -30,6 +30,9 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation ('com.github.javafaker:javafaker:1.0.2') {
+		exclude group: 'org.yaml', module: 'snakeyaml'
+	}
 	runtimeOnly 'com.h2database:h2'
 }
 
