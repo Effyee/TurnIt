@@ -17,13 +17,21 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/popular")
-    public ResponseEntity<List<ProductResponseDto>> getPopularProducts() {
-        List<ProductResponseDto> popularProducts = productService.getPopularProducts();
+    /**
+     * 캐싱이 적용되지 않은 API
+     */
+    @GetMapping("/popular/db")
+    public ResponseEntity<List<ProductResponseDto>> getPopularProductsFromDb() {
+        List<ProductResponseDto> popularProducts = productService.getPopularProductsFromDb();
         return ResponseEntity.ok(popularProducts);
     }
-    @GetMapping("/hello")
-    public String printHello(){
-        return "Hello World";
+
+    /**
+     * Redis 캐싱이 적용된 API
+     */
+    @GetMapping("/popular/cache")
+    public ResponseEntity<List<ProductResponseDto>> getPopularProductsWithCache() {
+        List<ProductResponseDto> popularProducts = productService.getPopularProductsWithCache();
+        return ResponseEntity.ok(popularProducts);
     }
 }
