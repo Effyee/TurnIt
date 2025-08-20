@@ -1,0 +1,12 @@
+# prometheus.yml
+# Prometheus가 어떤 대상의 데이터를 수집할지 정의하는 설정 파일
+
+global:
+  scrape_interval: 15s # 15초마다 데이터 수집
+
+scrape_configs:
+  - job_name: 'turnit-api'
+    metrics_path: '/actuator/prometheus' # 우리 앱의 성능 지표가 노출되는 경로
+    static_configs:
+      # 수집 대상: docker-compose 내부의 'turnit-api' 서비스의 8080 포트
+      - targets: ['turnit-api:8080']
