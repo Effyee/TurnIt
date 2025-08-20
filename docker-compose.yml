@@ -8,6 +8,11 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_REDIS_HOST=redis
+      - management.endpoints.web.exposure.include=*
+      - # 상세 히스토그램 데이터를 생성
+      - management.metrics.distribution.percentiles-histogram.http.server.requests=true
+
     depends_on:
       - redis
 
