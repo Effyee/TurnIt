@@ -23,18 +23,27 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// Micrometer & Prometheus
+	implementation 'io.micrometer:micrometer-core'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'com.h2database:h2'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+
 	implementation ('com.github.javafaker:javafaker:1.0.2') {
 		exclude group: 'org.yaml', module: 'snakeyaml'
 	}
-	runtimeOnly 'com.h2database:h2'
 }
+
 
 bootJar {
 	mainClass = 'com.turnit.api.TurnitApiApplication'

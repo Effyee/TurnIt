@@ -1,10 +1,12 @@
 package com.turnit.api.domain;
 
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Getter
@@ -34,11 +36,17 @@ public class Trade extends BaseTimeEntity {
     @Column(nullable = false)
     private Long price; // 최종 거래가
 
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
     @Builder
-    public Trade(Product product, SellBid sellBid, User buyer, Long price) {
+    public Trade(Product product, SellBid sellBid, User buyer, Long price, LocalDateTime createdAt) {
+        // 기존 빌더 생성자 내용
         this.product = product;
         this.sellBid = sellBid;
         this.buyer = buyer;
         this.price = price;
+        this.createdAt = createdAt; // 이 줄을 추가해야 합니다.
     }
 }
