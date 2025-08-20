@@ -1,0 +1,30 @@
+spring:
+  # 기본 프로필은 prod로 설정합니다.
+  profiles:
+    active: prod
+
+  datasource:
+    url: jdbc:mysql://turnitdb.cyiskggzqvut.ap-northeast-2.rds.amazonaws.com:3306/turnit_db
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+  redis:
+    host: ${SPRING_REDIS_HOST:localhost}
+    port: 6379
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # prometheus를 포함한 모든 actuator 엔드포인트 공개
+  health:
+    show-details: ALWAYS

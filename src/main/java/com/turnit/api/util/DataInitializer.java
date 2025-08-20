@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -20,7 +21,7 @@ import java.util.Random;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-@Profile("local") // local 프로필일 때만 실행되도록 설정
+@Profile({"prod", "local"})  // local 프로필일 때만 실행되도록 설정
 public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
@@ -85,11 +86,8 @@ public class DataInitializer implements CommandLineRunner {
 
         // 4. 거래 체결 생성 (인기 상품 조회를 위해 가장 중요!)
         List<Trade> trades = new ArrayList<>();
-        // 거래가 체결되려면 판매 입찰이 있어야 하므로, 생성된 판매 입찰 중 일부를 거래된 것으로 만듦
-        for (int i = 0; i < 200; i++) { // 300개의 판매 입찰 중 200개를 거래된 것으로 가정
-            SellBid randomBid = sellBids.get(i); // 순차적으로 가져와서 중복 거래를 피함
-
-            // 구매자는 판매자가 아니어야 함
+        for (int i = 0; i < 200; i++) {
+            SellBid randomBid = sellBids.get(i);
             User buyer;
             do {
                 buyer = users.get(random.nextInt(users.size()));
@@ -100,8 +98,10 @@ public class DataInitializer implements CommandLineRunner {
                     .sellBid(randomBid)
                     .buyer(buyer)
                     .price(randomBid.getPrice())
+                    .createdAt(LocalDateTime.now()) // 이 줄을 추가
                     .build());
         }
+
         tradeRepository.saveAll(trades);
         log.info("거래 200건 생성 완료.");
         log.info("더미 데이터 생성이 완료되었습니다.");
