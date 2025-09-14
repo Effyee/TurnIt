@@ -43,9 +43,9 @@ public class ProductService {
      * (캐시가 없으면 DB에서 조회 후 Redis에 저장)
      */
     @Cacheable("popular-products")
-    public List<ProductResponseDto> getPopularProductsWithCache() {
-        log.info("===== (캐시 없음) DB에서 조회하여 캐시에 저장합니다. =====");
-        LocalDateTime twentyFourHoursAgo = LocalDateTime.now().minusHours(24);
+        public List<ProductResponseDto> getPopularProductsWithCache() {
+            log.info("===== (캐시 없음) DB에서 조회하여 캐시에 저장합니다. =====");
+            LocalDateTime twentyFourHoursAgo = LocalDateTime.now().minusHours(24);
         Pageable topTen = PageRequest.of(0, 10);
         List<Long> popularProductIds = tradeRepository.findPopularProductIds(twentyFourHoursAgo, topTen);
 
